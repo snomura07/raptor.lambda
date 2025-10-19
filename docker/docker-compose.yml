@@ -33,7 +33,8 @@ services:
     restart: "no"
 
   deployer:
-    image: amazon/aws-cli
+    build: build_image/deployer/
+    image: lambda_deployer_img
     volumes:
       - ../src:/app/src
       - ../deploy/deploy.bash:/app/deploy.bash:ro
