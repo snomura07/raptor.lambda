@@ -1,21 +1,21 @@
-.PHONY: zip deploy invoke clean
+.PHONY: zip-% deploy-% invoke-% clean
 
-zip:
-	cd src && zip -r ../lambda.zip .
+zip-%:
+	cd lambda/$* && zip -r ../../$*.zip .
 
-deploy: zip
+deploy-%: zip-%
 	awslocal lambda create-function \
-		--function-name HelloLambda \
+		--function-name $* \
 		--runtime python3.11 \
 		--handler lambda_function.lambda_handler \
 		--role arn:aws:iam::000000000000:role/fake-role \
-		--zip-file fileb://lambda.zip || echo "Function already exists"
+		--zip-file fileb://$*.zip || echo "Function '$*' already exists"
 
-invoke:
+invoke-%:
 	awslocal lambda invoke \
-		--function-name HelloLambda \
+		--function-name $* \
 		--payload '{}' \
 		response.json && cat response.json
 
 clean:
-	rm -f lambda.zip response.json
+	rm -f *.zip response.json
