@@ -11,9 +11,6 @@ dynamodb = boto3.resource(
 )
 table = dynamodb.Table('RaptorDB')
 
-# dynamodb = boto3.resource('dynamodb')
-# table = dynamodb.Table('RaptorDB')
-
 def lambda_handler(event, context):
     print("Lambdaが呼び出されました")
     print(f"受信イベント: {event}")
