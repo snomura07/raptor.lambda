@@ -5,9 +5,10 @@ services:
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=lambda
+      - SERVICES=lambda,apigateway
       - DEBUG=1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ../artifact:/workspace
+      - ../init:/etc/localstack/init/ready.d
     working_dir: /workspace
